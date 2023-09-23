@@ -3,6 +3,7 @@ package alatoo.kg.legislations.models.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tags")
@@ -13,7 +14,7 @@ public class Tag {
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToOne
-    @JoinColumn(name = "legislations_id")
-    private Legislation legislation;
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "legislations_id", referencedColumnName = "id")
+    private Collection<Legislation> legislations;
 }

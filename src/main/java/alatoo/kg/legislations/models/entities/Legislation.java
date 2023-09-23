@@ -23,10 +23,8 @@ public class Legislation {
     private String title;
     @OneToOne(mappedBy = "legislation", cascade = CascadeType.ALL)
     private Image image;
-    @Column(name = "id_idea")
+    @Column(name = "is_idea")
     private Boolean is_idea;
-    @OneToOne(mappedBy = "legislation", cascade = CascadeType.ALL)
-    private Tag tag;
     @Column(name = "date")
     private LocalDateTime date;
     @Column(name = "votes_total")
