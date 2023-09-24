@@ -6,6 +6,8 @@ import alatoo.kg.legislations.models.entities.User;
 import alatoo.kg.legislations.services.LegislationService;
 import alatoo.kg.legislations.services.TagService;
 import alatoo.kg.legislations.services.UserService;
+import alatoo.kg.legislations.services.serviceImpl.LegislationServiceImpl;
+import alatoo.kg.legislations.services.serviceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,25 +20,23 @@ import java.util.List;
 @RequestMapping("api/v1/legislations")
 public class LegislationController {
     @Autowired
-    private LegislationService legislationService;
-
+    private LegislationServiceImpl legislationServiceImpl;
+    @Autowired
+    UserService userService;
     @Autowired
     private TagService tagService;
 
-//    @GetMapping("/getTokenCheck")
-//    public ResponseEntity<Collection<Legislation>> getAllLegislations(@RequestHeader(name = "Authorization") String token){
-//        User user = userService.getUsernameFromToken(token);
-//        return ResponseEntity.ok(legislationService.getAllLegislations());
-//    }
 
     @GetMapping("/all")
-    public List<LegislationDto> findAll(){
-        return legislationService.findAll();
+    public ResponseEntity<List<LegislationDto>> findAll(@RequestHeader(name = "Authorization") String token){
+        User user = userService.getUsernameFromToken(token);
+        return ResponseEntity.ok(legislationServiceImpl.findAll());
     }
 
     @PostMapping("/save")
-    public void save(@RequestBody LegislationDto legislationDto){
-         legislationService.save(legislationDto);
+    public void save(@RequestHeader(name = "Authorization") String token ,@RequestBody LegislationDto legislationDto){
+        User user = userService.getUsernameFromToken(token);
+         legislationServiceImpl.save(legislationDto);
     }
 
     @GetMapping("/findLegislationDtosByTagId")

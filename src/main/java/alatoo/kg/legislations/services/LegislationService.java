@@ -8,4 +8,5 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 public interface LegislationService extends BaseCrudService<LegislationDto, Long>{
+
 }

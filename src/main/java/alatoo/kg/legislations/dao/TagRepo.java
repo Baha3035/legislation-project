@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TagRepo extends JpaRepository<Tag,Long> {
-    List<Legislation> findLegislationsById(Long id); // Sultan should make ManyToOne
+    List<Legislation> findLegislationsById(Long id);
+    Tag findByName(String name);
+    // Sultan should make ManyToOne
 }

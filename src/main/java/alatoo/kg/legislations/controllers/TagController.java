@@ -21,4 +21,9 @@ public class TagController {
     List<TagDto> findAll(){
         return tagService.findAll();
     }
+
+    // make dto to save petition by specifying only image_url. Image should be created during the execution of this method
+    // check if find petition by tag_id works
+    // make it possible to filter by date, tag, title
+    // make dto to save comment by specifying only comment_content. Comment should be created during the execution of this method
 }
