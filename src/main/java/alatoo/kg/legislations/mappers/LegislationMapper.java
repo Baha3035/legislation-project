@@ -1,14 +1,9 @@
 package alatoo.kg.legislations.mappers;
-
-import alatoo.kg.legislations.models.dto.CommentDto;
 import alatoo.kg.legislations.models.dto.LegislationDto;
-import alatoo.kg.legislations.models.entities.Comment;
 import alatoo.kg.legislations.models.entities.Legislation;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,8 +1,5 @@
 package alatoo.kg.legislations.mappers;
-
-import alatoo.kg.legislations.models.dto.CommentDto;
 import alatoo.kg.legislations.models.dto.ImageDto;
-import alatoo.kg.legislations.models.entities.Comment;
 import alatoo.kg.legislations.models.entities.Image;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
@@ -42,3 +39,4 @@ public class ImageMapper implements BaseMapper<ImageDto, Image>{
         return entities.stream().map(x->mapperFacade.map(x, ImageDto.class)).collect(Collectors.toList());
     }
 }
+

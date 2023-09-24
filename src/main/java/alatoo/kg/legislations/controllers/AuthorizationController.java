@@ -1,68 +1,41 @@
 package alatoo.kg.legislations.controllers;
 
-import alatoo.kg.legislations.config.JWTGenerator;
-import alatoo.kg.legislations.dao.RoleRepo;
 import alatoo.kg.legislations.dao.UserRepo;
-import alatoo.kg.legislations.models.dto.AuthResponseDTO;
-import alatoo.kg.legislations.models.dto.LoginDTO;
-import alatoo.kg.legislations.models.dto.RoleDto;
-import alatoo.kg.legislations.models.dto.UserDto;
-import alatoo.kg.legislations.models.entities.Role;
-import alatoo.kg.legislations.models.entities.User;
+import alatoo.kg.legislations.dto.auth.AuthenticationRequest;
+import alatoo.kg.legislations.dto.auth.user.UserRequest;
+import alatoo.kg.legislations.jwt.JwtTokenProvider;
 import alatoo.kg.legislations.services.UserService;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthorizationController {
 
     private AuthenticationManager authenticationManager;
-    private UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
     private UserRepo userRepo;
-    private RoleRepo roleRepo;
     private PasswordEncoder passwordEncoder;
-    private JWTGenerator jwtGenerator;
+    private final UserService service;
 
-    public AuthorizationController(
-            AuthenticationManager authenticationManager, UserRepo userRepo,
-            UserService userService,
-            RoleRepo roleRepo, PasswordEncoder passwordEncoder,
-            JWTGenerator jwtGenerator){
-        this.authenticationManager = authenticationManager;
-        this.userRepo = userRepo;
-        this.userService = userService;
-        this.roleRepo = roleRepo;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtGenerator = jwtGenerator;
+    @PostMapping("/register/user")
+    public ResponseEntity<?> jobSeekerRegister(@RequestBody UserRequest request) {
+        System.out.println(request.getEmail());
+        return service.registerUser(request);
     }
 
-    @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody UserDto userDto){
-        userService.saveUser(userDto);
-        return ResponseEntity.ok("Registered");
+    @PostMapping("/register/admin")
+    public ResponseEntity<?> adminRegister(@RequestBody UserRequest request) {
+        return service.adminRegister(request);
     }
 
-    @PostMapping("login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO login){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request) {
+        return ResponseEntity.ok(service.authenticate(request));
     }
 
 }

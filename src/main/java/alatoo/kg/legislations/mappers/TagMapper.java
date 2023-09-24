@@ -1,8 +1,6 @@
 package alatoo.kg.legislations.mappers;
 
-import alatoo.kg.legislations.models.dto.CommentDto;
 import alatoo.kg.legislations.models.dto.TagDto;
-import alatoo.kg.legislations.models.entities.Comment;
 import alatoo.kg.legislations.models.entities.Tag;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;

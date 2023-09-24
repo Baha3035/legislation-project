@@ -13,7 +13,4 @@ public class Image {
     private Long id;
     @Column(name = "uri")
     private String uri;
-    @OneToOne
-    @JoinColumn(name = "legislations_id")
-    private Legislation legislation;
 }

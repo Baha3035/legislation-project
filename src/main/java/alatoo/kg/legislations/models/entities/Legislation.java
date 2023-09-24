@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Table(name = "legislations")
@@ -21,8 +22,9 @@ public class Legislation {
     private String solution;
     @Column(name = "title")
     private String title;
-    @OneToOne(mappedBy = "legislation", cascade = CascadeType.ALL)
-    private Image image;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "users_id", referencedColumnName = "id")
+    private Collection<Image> images;
     @Column(name = "is_idea")
     private Boolean is_idea;
     @Column(name = "date")

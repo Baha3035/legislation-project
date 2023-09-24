@@ -1,14 +1,22 @@
 package alatoo.kg.legislations.services.serviceImpl;
 
+import alatoo.kg.legislations.dao.ImageRepo;
+import alatoo.kg.legislations.mappers.ImageMapper;
 import alatoo.kg.legislations.models.dto.ImageDto;
 import alatoo.kg.legislations.services.ImageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ImageServiceImpl implements ImageService {
+    @Autowired
+    private ImageRepo repo;
     @Override
     public ImageDto save(ImageDto imageDto) {
-        return null;
+        return map().toDto(repo.save(map().toEntity(imageDto)));
     }
 
     @Override
@@ -23,6 +31,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageDto> findAll() {
-        return null;
+        return map().toDtoList(repo.findAll());
+    }
+
+    ImageMapper map() {
+        return new ImageMapper();
     }
 }

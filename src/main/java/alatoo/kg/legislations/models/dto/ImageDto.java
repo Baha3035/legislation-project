@@ -8,5 +8,4 @@ import javax.persistence.*;
 public class ImageDto {
     private Long id;
     private String uri;
-    private LegislationDto legislation;
 }

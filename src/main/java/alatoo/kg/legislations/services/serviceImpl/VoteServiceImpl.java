@@ -1,14 +1,20 @@
 package alatoo.kg.legislations.services.serviceImpl;
 
+import alatoo.kg.legislations.dao.VoteRepo;
+import alatoo.kg.legislations.mappers.VoteMapper;
 import alatoo.kg.legislations.models.dto.VoteDto;
-import alatoo.kg.legislations.services.VoteService;
+import alatoo.kg.legislations.services.BaseCrudService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-public class VoteServiceImpl implements VoteService {
+@Service
+public class VoteServiceImpl implements BaseCrudService<VoteDto, Long> {
+    @Autowired
+    private VoteRepo repo;
     @Override
     public VoteDto save(VoteDto voteDto) {
-        return null;
+        return map().toDto(repo.save(map().toEntity(voteDto)));
     }
 
     @Override
@@ -23,6 +29,10 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public List<VoteDto> findAll() {
-        return null;
+        return map().toDtoList(repo.findAll());
+    }
+
+    private VoteMapper map() {
+        return new VoteMapper();
     }
 }
